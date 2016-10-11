@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unitn.lode3.postprod.Controller">
+   <children>
+      <TableView fx:id="tableViewCoda" prefHeight="280.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tableColumnFileName" prefWidth="294.0" text="File" />
+          <TableColumn fx:id="tableColumnParametri" minWidth="0.0" prefWidth="189.0" text="Parametri" />
+            <TableColumn fx:id="tableColumnDimensione" prefWidth="95.0" text="Dimensione" />
+            <TableColumn fx:id="tableColumnStato" prefWidth="89.0" text="Stato" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
+         <children>
+            <Label fx:id="labelFileName" prefHeight="27.0" prefWidth="256.0" text="Scegli un file da accodare" />
+            <Button fx:id="buttonSfoglia" mnemonicParsing="false" text="Sfoglia..." />
+            <ChoiceBox fx:id="choiceBoxPreset" prefWidth="150.0" />
+            <CheckBox fx:id="checkBoxNoAudio" mnemonicParsing="false" text="no audio" />
+            <Button fx:id="buttonAccoda" mnemonicParsing="false" text="Accoda" />
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="80.0" prefWidth="200.0" spacing="8.0">
+         <children>
+            <Button fx:id="buttonAnnulla" mnemonicParsing="false" text="Annulla ed esci" />
+            <Button fx:id="buttonAvviaCoda" mnemonicParsing="false" text="Avvia coda" />
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
