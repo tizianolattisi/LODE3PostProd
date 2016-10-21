@@ -1,5 +1,6 @@
 package it.unitn.lode3.postprod.conversion;
 
+import it.unitn.lode3.postprod.AbstractController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Created by tiziano on 11/10/16.
  */
-public class Controller implements Initializable{
+public class ConversionController extends AbstractController implements Initializable {
 
     private ControllerStatus status = ControllerStatus.EMPTY;
 
@@ -63,11 +64,6 @@ public class Controller implements Initializable{
     private ChoiceBox choiceBoxPreset;
     private ExecutorService executor;
     private ObservableList<ConversionNode> conversionNodeObservableList;
-    private Properties properties;
-
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -99,7 +95,7 @@ public class Controller implements Initializable{
         buttonAccoda.setOnAction(event -> {
             if( selectedFile!=null ){
                 ConversionNode node = ConversionNode.create()
-                        .ffmpeg(properties.getProperty("ffmpeg.path"))
+                        .ffmpeg(getProperty("ffmpeg.path"))
                         .file(selectedFile)
                         .preset(choiceBoxPreset.getValue().toString());
                 if( checkBoxNoAudio.isSelected() ){
@@ -143,7 +139,7 @@ public class Controller implements Initializable{
                 }
 
                 if( shutdownExecutor ){
-                    shutdownExecutor();
+                    shutdown();
                     timeline.stop();
                     status = ControllerStatus.DONE;
                 }
@@ -190,13 +186,13 @@ public class Controller implements Initializable{
      */
     public EventHandler<WindowEvent> handlerClose = event -> {
         if( checkClose() ) {
-            shutdownExecutor();
+            shutdown();
         } else {
             event.consume();
         }
     };
 
-    private Boolean checkClose() {
+    protected Boolean checkClose() {
         if( ControllerStatus.WAITING.equals(status) || ControllerStatus.READY.equals(status) ){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Conferma uscita");
@@ -208,7 +204,7 @@ public class Controller implements Initializable{
         return Boolean.TRUE;
     }
 
-    private void shutdownExecutor() {
+    protected void shutdown() {
         if( executor!=null ) {
             executor.shutdown();
             try {

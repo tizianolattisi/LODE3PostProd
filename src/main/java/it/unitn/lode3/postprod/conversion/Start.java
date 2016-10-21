@@ -1,5 +1,6 @@
 package it.unitn.lode3.postprod.conversion;
 
+import it.unitn.lode3.postprod.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ public class Start extends Application {
     }
 
     private static Properties readProprties() throws IOException {
-        String propertiesFileName = "/postprod.properties";
+        String propertiesFileName = "/conversion.properties";
         InputStream propertiesStream = null;
 
         try {
@@ -46,7 +47,7 @@ public class Start extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/conversion.fxml"));
 
         Parent root = null;
         try {
@@ -57,7 +58,7 @@ public class Start extends Application {
 
         Controller controller = loader.getController();
         controller.setProperties(properties);
-        primaryStage.setTitle("LODE3 Post Produzione");
+        primaryStage.setTitle("LODE3 - Conversione video");
         Scene scene = new Scene(root, 680, 400);
 
         primaryStage.setScene(scene);
