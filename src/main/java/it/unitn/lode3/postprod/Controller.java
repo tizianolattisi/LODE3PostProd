@@ -16,10 +16,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -68,7 +65,11 @@ public class Controller implements Initializable{
     private ChoiceBox choiceBoxPreset;
     private ExecutorService executor;
     private ObservableList<ConversionNode> conversionNodeObservableList;
+    private Properties properties;
 
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -102,7 +103,10 @@ public class Controller implements Initializable{
         });
         buttonAccoda.setOnAction(event -> {
             if( selectedFile!=null ){
-                ConversionNode node = ConversionNode.create().file(selectedFile).preset(choiceBoxPreset.getValue().toString());
+                ConversionNode node = ConversionNode.create()
+                        .ffmpeg(properties.getProperty("ffmpeg.path"))
+                        .file(selectedFile)
+                        .preset(choiceBoxPreset.getValue().toString());
                 if( checkBoxNoAudio.isSelected() ){
                     node = node.noAudio();
                 }

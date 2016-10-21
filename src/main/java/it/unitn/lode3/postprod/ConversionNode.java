@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ConversionNode {
 
-    private final String FFMPEG = "/Applications/ffmpeg/ffmpeg";
+    private String ffmpegPath = "ffmpeg";
 
     private File fileToConvert;
 
@@ -24,7 +24,7 @@ public class ConversionNode {
 
     public ConversionNode() {
     }
-    
+
     public static ConversionNode create() {
         return new ConversionNode();
     }
@@ -42,6 +42,11 @@ public class ConversionNode {
 
     public ConversionNode noAudio() {
         this.noAudio = Boolean.TRUE;
+        return this;
+    }
+
+    public ConversionNode ffmpeg(String ffmpegPath) {
+        this.ffmpegPath = ffmpegPath;
         return this;
     }
 
@@ -83,7 +88,7 @@ public class ConversionNode {
 
     public List<String> getCommand() {
         List<String> command = new ArrayList<>();
-        command.add(FFMPEG);
+        command.add(ffmpegPath);
         command.add("-i");
         command.add(getFileToConvert().getAbsolutePath());
         if( getNoAudio() ) {
