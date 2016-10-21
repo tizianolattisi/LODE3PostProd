@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
  */
 public class Controller implements Initializable{
 
+    private ControllerStatus status = ControllerStatus.EMPTY;
+
     private final String LABEL_TEXT = "Scegli un file da accodare";
 
 
@@ -106,10 +108,12 @@ public class Controller implements Initializable{
                 selectedFile=null;
                 labelFileName.setText(LABEL_TEXT);
                 conversionNodeObservableList.add(node);
+                status = ControllerStatus.READY;
                 selectFileAsset();
             }
         });
         buttonAvviaCoda.setOnAction(event -> {
+            convertingAsset();
             executor = Executors.newFixedThreadPool(1);
             for( ConversionNode node: conversionNodeObservableList ){
                 Callable<Integer> task = () -> new ProcessBuilder(node.getCommand()).inheritIO().start().waitFor();
@@ -141,9 +145,11 @@ public class Controller implements Initializable{
                 if( shutdownExecutor ){
                     shutdownExecutor();
                     timeline.stop();
+                    status = ControllerStatus.DONE;
                 }
                 System.out.println("\n");
             }));
+            status = ControllerStatus.WAITING;
             timeline.play();
 
         });
@@ -157,13 +163,20 @@ public class Controller implements Initializable{
         buttonAccoda.setDisable(true);
         buttonAvviaCoda.setDisable(conversionNodeObservableList.size()==0);
     }
-
     private void selectedFileAsset(){
         buttonSfoglia.setDisable(false);
         choiceBoxPreset.setDisable(false);
         checkBoxNoAudio.setDisable(false);
         buttonAccoda.setDisable(false);
         buttonAvviaCoda.setDisable(conversionNodeObservableList.size()==0);
+    }
+    private void convertingAsset(){
+        labelFileName.setText("");
+        buttonSfoglia.setDisable(true);
+        choiceBoxPreset.setDisable(true);
+        checkBoxNoAudio.setDisable(true);
+        buttonAccoda.setDisable(true);
+        buttonAvviaCoda.setDisable(true);
     }
 
 
@@ -184,7 +197,7 @@ public class Controller implements Initializable{
     };
 
     private Boolean checkClose() {
-        if( conversionNodeObservableList.size()>0 ){
+        if( ControllerStatus.WAITING.equals(status) || ControllerStatus.READY.equals(status) ){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Conferma uscita");
             alert.setHeaderText("Vuoi realmente abbandonare il lavoro di conversione?");
