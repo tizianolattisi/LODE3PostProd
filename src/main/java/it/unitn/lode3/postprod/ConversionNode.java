@@ -16,18 +16,35 @@ public class ConversionNode {
 
     private String preset;
 
-    private Boolean noAudio;
+    private Boolean noAudio = Boolean.FALSE;
 
     private Long size;
 
     private String status="-";
 
-    public ConversionNode(File fileToConvert, String preset, Boolean noAudio, Long size) {
-        this.fileToConvert = fileToConvert;
-        this.preset = preset;
-        this.noAudio = noAudio;
-        this.size = size;
+    public ConversionNode() {
     }
+    
+    public static ConversionNode create() {
+        return new ConversionNode();
+    }
+
+    public ConversionNode file(File fileToConvert) {
+        this.fileToConvert = fileToConvert;
+        this.size = fileToConvert.length();
+        return this;
+    }
+
+    public ConversionNode preset(String preset) {
+        this.preset = preset;
+        return this;
+    }
+
+    public ConversionNode noAudio() {
+        this.noAudio = Boolean.TRUE;
+        return this;
+    }
+
 
     public File getFileToConvert() {
         return fileToConvert;

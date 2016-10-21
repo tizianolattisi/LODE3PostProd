@@ -2,7 +2,6 @@ package it.unitn.lode3.postprod;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -103,7 +102,10 @@ public class Controller implements Initializable{
         });
         buttonAccoda.setOnAction(event -> {
             if( selectedFile!=null ){
-                ConversionNode node = new ConversionNode(selectedFile, choiceBoxPreset.getValue().toString(), checkBoxNoAudio.isSelected(), selectedFile.length());
+                ConversionNode node = ConversionNode.create().file(selectedFile).preset(choiceBoxPreset.getValue().toString());
+                if( checkBoxNoAudio.isSelected() ){
+                    node = node.noAudio();
+                }
                 selectedFile=null;
                 labelFileName.setText(LABEL_TEXT);
                 conversionNodeObservableList.add(node);
