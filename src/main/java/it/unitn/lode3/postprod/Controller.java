@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by tiziano on 11/10/16.
@@ -89,6 +90,9 @@ public class Controller implements Initializable{
         conversionNodeObservableList = FXCollections.observableArrayList();
         tableViewCoda.setItems(conversionNodeObservableList);
 
+        buttonAnnulla.setOnAction(event -> {
+
+        });
         buttonSfoglia.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("File video (*.mov, *.m2ts)", "*.mov", "*.m2ts");
@@ -97,16 +101,12 @@ public class Controller implements Initializable{
             labelFileName.setText(selectedFile.getName());
             selectedFileAsset();
         });
-
         buttonAccoda.setOnAction(event -> {
             if( selectedFile!=null ){
                 ConversionNode node = new ConversionNode(selectedFile, choiceBoxPreset.getValue().toString(), checkBoxNoAudio.isSelected(), selectedFile.length());
-                //this.conversionNodes.add(node);
                 selectedFile=null;
                 labelFileName.setText(LABEL_TEXT);
                 conversionNodeObservableList.add(node);
-                //conversionNodeObservableList = FXCollections.observableArrayList(this.conversionNodes);
-                //tableViewCoda.setItems(conversionNodeObservableList);
                 selectFileAsset();
             }
         });
@@ -115,13 +115,13 @@ public class Controller implements Initializable{
             for( ConversionNode node: conversionNodeObservableList ){
                 Callable<Integer> task = () -> new ProcessBuilder(node.getCommand()).inheritIO().start().waitFor();
                 conversionResults.add(executor.submit(task));
-                System.out.println("Aggiunto " + node.getFileName());
             }
 
             Timeline timeline = new Timeline();
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), timelineEvent -> {
                 Integer i=0;
+
                 Boolean shutdownExecutor = Boolean.TRUE;
                 for( Future<Integer> res: conversionResults ){
                     shutdownExecutor = shutdownExecutor && res.isDone();
@@ -133,9 +133,12 @@ public class Controller implements Initializable{
                     i++;
                 }
 
-                for( ConversionNode node: conversionNodeObservableList ){
-                    System.out.println(node.getFileName() + " -> " + node.getStatus());
+                List<ConversionNode> tmp = conversionNodeObservableList.stream().collect(Collectors.toList());
+                conversionNodeObservableList.removeAll(conversionNodeObservableList);
+                for( ConversionNode node: tmp ){
+                    conversionNodeObservableList.add(node);
                 }
+
                 if( shutdownExecutor ){
                     shutdownExecutor();
                     timeline.stop();
