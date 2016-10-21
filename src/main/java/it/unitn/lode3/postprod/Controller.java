@@ -30,8 +30,6 @@ public class Controller implements Initializable{
 
     private File selectedFile=null;
 
-    //private List<ConversionNode> conversionNodes = new ArrayList<>();
-
     private List<Future<Integer>> conversionResults = new ArrayList<>();
 
     /*
@@ -45,8 +43,6 @@ public class Controller implements Initializable{
     private Button buttonAccoda;
     @FXML
     private Button buttonAvviaCoda;
-    @FXML
-    private Button buttonAnnulla;
     @FXML
     private Label labelFileName;
     @FXML
@@ -90,9 +86,6 @@ public class Controller implements Initializable{
         conversionNodeObservableList = FXCollections.observableArrayList();
         tableViewCoda.setItems(conversionNodeObservableList);
 
-        buttonAnnulla.setOnAction(event -> {
-
-        });
         buttonSfoglia.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("File video (*.mov, *.m2ts)", "*.mov", "*.m2ts");
@@ -183,20 +176,24 @@ public class Controller implements Initializable{
      *   HANDLERS
      */
     public EventHandler<WindowEvent> handlerClose = event -> {
+        if( checkClose() ) {
+            shutdownExecutor();
+        } else {
+            event.consume();
+        }
+    };
+
+    private Boolean checkClose() {
         if( conversionNodeObservableList.size()>0 ){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Conferma uscita");
             alert.setHeaderText("Vuoi realmente abbandonare il lavoro di conversione?");
             alert.setContentText("La coda in conversione verrà definitivamente persa.\n\n");
             Optional<ButtonType> result = alert.showAndWait();
-            if (ButtonType.OK.equals(result.get())) {
-                shutdownExecutor();
-                return;
-            } else {
-                event.consume();
-            }
+            return ButtonType.OK.equals(result.get());
         }
-    };
+        return Boolean.TRUE;
+    }
 
     private void shutdownExecutor() {
         if( executor!=null ) {

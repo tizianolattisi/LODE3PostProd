@@ -29,7 +29,6 @@
       </HBox>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="80.0" prefWidth="200.0" spacing="8.0">
          <children>
-            <Button fx:id="buttonAnnulla" mnemonicParsing="false" text="Annulla ed esci" />
             <Button fx:id="buttonAvviaCoda" mnemonicParsing="false" text="Avvia coda" />
          </children>
          <padding>
