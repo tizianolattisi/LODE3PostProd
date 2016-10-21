@@ -10,8 +10,8 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
          <children>
-            <Label fx:id="labelPCFileName" prefHeight="27.0" prefWidth="400.0" text="Scegli un file da accodare" />
-            <Button fx:id="buttonPcfile" mnemonicParsing="false" text="Sfoglia..." />
+            <Label fx:id="labelPCFileName" prefHeight="27.0" prefWidth="400.0" text="PC record file" />
+            <Button fx:id="buttonPcfile" mnemonicParsing="false" text="Browse..." />
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -19,8 +19,17 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
          <children>
-            <Label fx:id="labelCamFileName" prefHeight="27.0" prefWidth="400.0" text="Scegli un file da accodare" />
-            <Button fx:id="buttonCamfile" mnemonicParsing="false" text="Sfoglia..." />
+            <Label fx:id="labelCamFileName" prefHeight="27.0" prefWidth="400.0" text="CAM record file" />
+            <Button fx:id="buttonCamfile" mnemonicParsing="false" text="Browse..." />
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="15.0" layoutY="260.0" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
+         <children>
+            <Label fx:id="labelOutputFolderName" prefHeight="27.0" prefWidth="400.0" text="Output folder" />
+            <Button fx:id="buttonOutputfolder" mnemonicParsing="false" text="Browse..." />
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -28,7 +37,7 @@
       </HBox>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
          <children>
-            <Button fx:id="buttonStart" mnemonicParsing="false" text="Avvia composizione" />
+            <Button fx:id="buttonStart" mnemonicParsing="false" text="Start" />
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

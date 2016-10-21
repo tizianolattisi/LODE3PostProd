@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 import org.apache.commons.io.FileUtils;
@@ -34,13 +35,18 @@ public class CompositionController extends AbstractController implements Initial
     @FXML
     private Button buttonCamfile;
     @FXML
+    private Button buttonOutputfolder;
+    @FXML
     private Label labelPCFileName;
     @FXML
     private Label labelCamFileName;
+    @FXML
+    private Label labelOutputFolderName;
 
 
     private File pcFile=null;
     private File camFile=null;
+    private File outputDirectory=null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +62,11 @@ public class CompositionController extends AbstractController implements Initial
             camFile = selectMovie();
             labelCamFileName.setText(camFile.getName());
         });
+        buttonOutputfolder.setOnAction(event -> {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            outputDirectory = directoryChooser.showDialog(root.getScene().getWindow());
+            labelOutputFolderName.setText(outputDirectory.getAbsolutePath());
+        });
 
     }
 
@@ -67,6 +78,10 @@ public class CompositionController extends AbstractController implements Initial
     }
 
     private void compose() {
+
+        // lecture directory
+        File lectureDirectory = new File(outputDirectory.getAbsolutePath() + "/lecture");
+        lectureDirectory.mkdir();
 
         // root
         XMLData data = new XMLData();
@@ -94,12 +109,12 @@ public class CompositionController extends AbstractController implements Initial
         data.setInfo(info);
 
         // build
-        XMLHelper.build(XMLData.class).marshall(data, new File("data.xml"));
+        XMLHelper.build(XMLData.class).marshall(data, new File(lectureDirectory.getAbsolutePath() + "/data.xml"));
 
         // movie
         try {
-            FileUtils.copyFileToDirectory(pcFile, new File("."));
-            FileUtils.copyFileToDirectory(camFile, new File("."));
+            FileUtils.copyFileToDirectory(pcFile, lectureDirectory);
+            FileUtils.copyFileToDirectory(camFile, lectureDirectory);
         } catch (IOException e) {
             e.printStackTrace();
         }
