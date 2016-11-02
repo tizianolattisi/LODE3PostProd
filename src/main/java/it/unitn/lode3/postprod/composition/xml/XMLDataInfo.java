@@ -30,7 +30,7 @@ public class XMLDataInfo {
         return lecturer;
     }
 
-    @XmlElement(name = "dinamic_url") // XXX: correggere?
+    @XmlElement(name = "dynamic_url")
     public String getDynamic_url() {
         return dynamic_url;
     }
