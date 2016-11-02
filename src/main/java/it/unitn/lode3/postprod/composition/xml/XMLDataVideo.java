@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class XMLDataVideo {
 
-    private String url;
+    private String name;
     private Long totaltime;
     private Long startime;
 
     public XMLDataVideo() {
     }
 
-    @XmlElement(name = "url")
-    public String getUrl() {
-        return url;
+    @XmlElement(name = "name")
+    public String getName() {
+        return name;
     }
 
     @XmlElement(name = "totaltime")
@@ -29,8 +29,8 @@ public class XMLDataVideo {
         return startime;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setTotaltime(Long totaltime) {

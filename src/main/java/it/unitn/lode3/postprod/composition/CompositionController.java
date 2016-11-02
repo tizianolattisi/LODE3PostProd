@@ -120,14 +120,14 @@ public class CompositionController extends AbstractController implements Initial
 
         // CAM
         XMLDataVideo camVideo = new XMLDataVideo();
-        camVideo.setUrl("movie.mp4");
+        camVideo.setName("movie");
         camVideo.setStartime(0L);
         camVideo.setTotaltime(100L);
         data.setCamvideo(camVideo);
 
         // PVR
         XMLDataVideo pcVideo = new XMLDataVideo();
-        pcVideo.setUrl("movie2.mp4");
+        pcVideo.setName("movie2");
         pcVideo.setStartime(0L);
         pcVideo.setTotaltime(100L);
         data.setPcvideo(pcVideo);
