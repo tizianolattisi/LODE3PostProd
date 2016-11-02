@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -7,34 +9,22 @@
 
 <VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unitn.lode3.postprod.composition.CompositionController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-      <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
+      <AnchorPane prefHeight="300.0" prefWidth="200.0">
          <children>
-            <Label fx:id="labelPCFileName" prefHeight="27.0" prefWidth="400.0" text="PC record file" />
-            <Button fx:id="buttonPcfile" mnemonicParsing="false" text="Browse..." />
-         </children>
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
-         <children>
-            <Label fx:id="labelCamFileName" prefHeight="27.0" prefWidth="400.0" text="CAM record file" />
-            <Button fx:id="buttonCamfile" mnemonicParsing="false" text="Browse..." />
-         </children>
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="15.0" layoutY="260.0" prefHeight="45.0" prefWidth="200.0" spacing="8.0">
-         <children>
-            <Label fx:id="labelOutputFolderName" prefHeight="27.0" prefWidth="400.0" text="Output folder" />
-            <Button fx:id="buttonOutputfolder" mnemonicParsing="false" text="Browse..." />
-         </children>
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </HBox>
+            <TextField fx:id="textFieldCourse" layoutX="126.0" layoutY="192.0" prefHeight="27.0" prefWidth="437.0" />
+            <Button fx:id="buttonOutputfolder" layoutX="581.0" layoutY="142.0" mnemonicParsing="false" text="Browse..." />
+            <Label fx:id="labelOutputFolderName" layoutX="126.0" layoutY="142.0" prefHeight="27.0" prefWidth="437.0" text="browse..." />
+            <Button fx:id="buttonCamfile" layoutX="581.0" layoutY="104.0" mnemonicParsing="false" text="Browse..." />
+            <Button fx:id="buttonPcfile" layoutX="581.0" layoutY="66.0" mnemonicParsing="false" text="Browse..." />
+            <Label fx:id="labelCamFileName" layoutX="126.0" layoutY="104.0" prefHeight="27.0" prefWidth="437.0" text="browse..." />
+            <Label fx:id="labelPCFileName" layoutX="126.0" layoutY="66.0" prefHeight="27.0" prefWidth="437.0" text="browse..." />
+            <Label layoutX="18.0" layoutY="192.0" prefHeight="27.0" text="Course name" />
+            <Label fx:id="labelOutputFolderName1" layoutX="18.0" layoutY="142.0" prefHeight="27.0" prefWidth="99.0" text="Output folder" />
+            <Label fx:id="labelOutputFolderName11" layoutX="18.0" layoutY="104.0" prefHeight="27.0" prefWidth="99.0" text="CAM record file" />
+            <Label fx:id="labelOutputFolderName111" layoutX="18.0" layoutY="66.0" prefHeight="27.0" prefWidth="99.0" text="PC record file" />
+            <TextField fx:id="textFieldLecture" layoutX="126.0" layoutY="228.0" prefHeight="27.0" prefWidth="437.0" />
+            <Label layoutX="18.0" layoutY="228.0" prefHeight="27.0" text="Lecture name" />
+         </children></AnchorPane>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
          <children>
             <Button fx:id="buttonStart" mnemonicParsing="false" text="Start" />

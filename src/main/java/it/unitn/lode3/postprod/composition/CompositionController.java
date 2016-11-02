@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -42,6 +43,10 @@ public class CompositionController extends AbstractController implements Initial
     private Label labelCamFileName;
     @FXML
     private Label labelOutputFolderName;
+    @FXML
+    private TextField textFieldCourse;
+    @FXML
+    private TextField textFieldLecture;
 
 
     private File pcFile=null;
@@ -79,8 +84,35 @@ public class CompositionController extends AbstractController implements Initial
 
     private void compose() {
 
+        //
+        String courseName = textFieldCourse.getText();
+        String lectureName = textFieldLecture.getText();
+
+        // the course directory exists?
+        File courseDirectory = new File(outputDirectory.getAbsolutePath() + "/" + courseName);
+        if( !courseDirectory.exists() ){
+            courseDirectory.mkdir();
+        } else {
+            if( !courseDirectory.isDirectory() ){
+                System.out.println("this is a big trouble");
+                System.exit(1);
+            }
+        }
+
         // lecture directory
-        File lectureDirectory = new File(outputDirectory.getAbsolutePath() + "/lecture");
+        Integer max=0;
+        for( File directory: courseDirectory.listFiles() ){
+            if( directory.isDirectory() ){
+                String name = directory.getName();
+                String sN = name.split(" ")[0];
+                Integer n = Integer.parseInt(sN);
+                if( n>max ){
+                    max = n;
+                }
+            }
+        }
+        String lectureNumber = String.format("%02d", ++max);;
+        File lectureDirectory = new File(courseDirectory.getAbsolutePath() + "/" + lectureNumber + " " + lectureName);
         lectureDirectory.mkdir();
 
         // root
@@ -102,9 +134,9 @@ public class CompositionController extends AbstractController implements Initial
 
         // info
         XMLDataInfo info = new XMLDataInfo();
-        info.setCourse("Corso demo");
+        info.setCourse(courseName);
         info.setLecturer("Docente demo");
-        info.setTitle("Titolo demo");
+        info.setTitle(lectureName);
         info.setDynamic_url("http://latemar.science.unitn.it/LODE");
         data.setInfo(info);
 
